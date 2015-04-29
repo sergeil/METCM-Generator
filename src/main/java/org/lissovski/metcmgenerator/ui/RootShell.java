@@ -69,18 +69,15 @@ public class RootShell extends Shell {
 	}
 	
 	private void adjustWidth(Text input, Integer numberOfChars) {
-		GC gc = new GC(input);
-		FontMetrics fm = gc.getFontMetrics();
-		
 		GridData gd = new GridData();
-		gd.widthHint = fm.getAverageCharWidth() * numberOfChars; 
+		gd.widthHint = 100; 
 		
 		input.setLayoutData(gd);
 	}
 	
 	private void createGroundValuesGroup(Composite owningContainer) {
 		Group groundValuesGroup = new Group(owningContainer, SWT.SHADOW_ETCHED_OUT);
-        GridLayout groundValuesGroupLayout = new GridLayout(6, false);
+        GridLayout groundValuesGroupLayout = new GridLayout(1, true);
         groundValuesGroup.setText("Ground values");
         groundValuesGroup.setLayout(groundValuesGroupLayout);
         
@@ -88,38 +85,61 @@ public class RootShell extends Shell {
         
         octantText = new Text(groundValuesGroup, inputMask);
         octantText.setMessage("Octant");
+        octantText.setToolTipText("Octant");
     	octantText.setText(settings.getOctant());
         adjustWidth(octantText);
         
         locationText = new Text(groundValuesGroup, inputMask);
         locationText.setMessage("Location");
+        locationText.setToolTipText("Location");
     	locationText.setText(settings.getLocation());
         adjustWidth(locationText);
         
         windSpeedText = new Text(groundValuesGroup, inputMask);
         windSpeedText.setMessage("Wind speed (kn)");
+        windSpeedText.setToolTipText("Wind speed (kn)");
     	windSpeedText.setText(settings.getWindSpeed());
         adjustWidth(windSpeedText);
         
         windDirectionText = new Text(groundValuesGroup, inputMask);
         windDirectionText.setMessage("Wind direction");
+        windDirectionText.setToolTipText("Wind direction");
     	windDirectionText.setText(settings.getWindDirection());
         adjustWidth(windDirectionText);
         
         temperatureText = new Text(groundValuesGroup, inputMask);
         temperatureText.setMessage("Temperature");
+        temperatureText.setToolTipText("Temperature");
         temperatureText.setText(settings.getTemperature());
         adjustWidth(temperatureText);
         
         airPressureText = new Text(groundValuesGroup, inputMask);
         airPressureText.setMessage("Air pressure");
+        airPressureText.setToolTipText("Air pressure");
     	airPressureText.setText(settings.getAirPressure());
         adjustWidth(airPressureText);
+        
+        GridData resetGroundValuesButtonLayoutData = new GridData();
+        resetGroundValuesButtonLayoutData.horizontalAlignment = SWT.CENTER;
+        Button resetGroundValuesButton = new Button(groundValuesGroup, SWT.NULL);
+        resetGroundValuesButton.setText("Reset");
+        resetGroundValuesButton.setLayoutData(resetGroundValuesButtonLayoutData);
+        
+        resetGroundValuesButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				octantText.setText("");
+				locationText.setText("");
+				windSpeedText.setText("");
+				windDirectionText.setText("");
+				temperatureText.setText("");
+				airPressureText.setText("");
+			}
+		});
 	}
 	
 	private void createDateTimeGroup(Composite owningContainer) {
 		Group dateTimeGroup = new Group(owningContainer, SWT.SHADOW_ETCHED_OUT);
-        dateTimeGroup.setLayout(new RowLayout(SWT.HORIZONTAL));
+        dateTimeGroup.setLayout(new RowLayout(SWT.VERTICAL));
         dateTimeGroup.setText("Time");
         
         dateInput = new DateTime(dateTimeGroup, SWT.DATE | SWT.BORDER);
@@ -127,26 +147,31 @@ public class RootShell extends Shell {
 	}
 
 	public RootShell(Display display, RootShellValues settings) {
-		super(display);
+		super(display, SWT.CLOSE | SWT.TITLE | SWT.MIN);
 		
 		this.settings = settings;
+		
+		setLayout(new GridLayout(2, false));
         
-        Composite topContainer = new Composite(this, SWT.NULL);
-        RowLayout topContainerLayout = new RowLayout(SWT.HORIZONTAL);
+        Composite leftContainer = new Composite(this, SWT.NULL);
+        RowLayout topContainerLayout = new RowLayout(SWT.VERTICAL);
         topContainerLayout.fill = true;
-        topContainer.setLayout(topContainerLayout);
+        leftContainer.setLayout(topContainerLayout);
         
-        createGroundValuesGroup(topContainer);
-        createDateTimeGroup(topContainer);
+        createGroundValuesGroup(leftContainer);
+        createDateTimeGroup(leftContainer);
         
+        GridData reportsGroupLayoutData = new GridData();
+        reportsGroupLayoutData.verticalAlignment = SWT.FILL;
         Group reportsGroup = new Group(this, SWT.SHADOW_ETCHED_OUT);
+        reportsGroup.setLayoutData(reportsGroupLayoutData);
         reportsGroup.setLayout(new RowLayout(SWT.VERTICAL));
         reportsGroup.setText("Report");
         
         reportTable = new Table(reportsGroup, SWT.BORDER | SWT.V_SCROLL);
         reportTable.setHeaderVisible(true);
         RowData reportTableLayoutData = new RowData();
-        reportTableLayoutData.height = 250;
+        reportTableLayoutData.height = 200;
         reportTable.setLayoutData(reportTableLayoutData);
         
         String [] columns = {
@@ -173,25 +198,22 @@ public class RootShell extends Shell {
         generateButton.setText("Generate");
         generateButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
-//				if (isGroundValuesSetValid()) {
-//					exportReportEventValues.rootShellValues = createGeneratorInput();
-					exportReportEventValues.rootShellValues = new RootShellValues(
-						octantText.getText(), 
-						locationText.getText(), 
-						windSpeedText.getText(), 
-						windDirectionText.getText(),
-						temperatureText.getText(),
-						airPressureText.getText(), 
-						null, 
-						null, 
-						floorsCountText.getText()
-					);
-					
-					GenerateReportEvent event = new GenerateReportEvent(this, exportReportEventValues.rootShellValues);
-					for (GenerateReportListener listener : generateReportListeners) {
-						listener.generateReport(event);		
-					}
-//				}
+				exportReportEventValues.rootShellValues = new RootShellValues(
+					octantText.getText(), 
+					locationText.getText(), 
+					windSpeedText.getText(), 
+					windDirectionText.getText(),
+					temperatureText.getText(),
+					airPressureText.getText(), 
+					null, 
+					null, 
+					floorsCountText.getText()
+				);
+				
+				GenerateReportEvent event = new GenerateReportEvent(this, exportReportEventValues.rootShellValues);
+				for (GenerateReportListener listener : generateReportListeners) {
+					listener.generateReport(event);		
+				}
 			}
         });
         
@@ -213,26 +235,9 @@ public class RootShell extends Shell {
 				}
 			}
         });
-       
-        setLayout(new RowLayout(SWT.VERTICAL));
 	}
 	
 	private boolean isReportTableValid() {
-		return true;
-	}
-	
-	private boolean isGroundValuesSetValid() {
-		Text[] fields = { octantText, locationText, windSpeedText, windDirectionText, airPressureText };
-		
-		for (int i=0; i<fields.length; i++) {
-			Text field = fields[i];
-			if (field.getText().equals("")) {
-				return false;
-			}
-		}
-		
-		// FIXME validate if Integers, Doubles
-		
 		return true;
 	}
 	
