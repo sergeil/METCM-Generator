@@ -7,24 +7,25 @@ public class GeneratorInput {
 	private Integer location;
 	private Double windSpeed;
 	private Double windDirection;
+	private Double temperature;
 	private Double airPressure;
 	private Date dateTime;
 	private Integer floorsCount;
 
 	public GeneratorInput(Integer octant, Integer location, Double windSpeed,
-			Double windDirection, Double airPressure, Date dateTime,
+			Double windDirection, Double temperature, Double airPressure, Date dateTime,
 			Integer floorsCount) {
-		super();
 		
 		this.octant = octant;
 		this.location = location;
 		this.windSpeed = windSpeed;
 		this.windDirection = windDirection;
+		this.temperature = temperature;
 		this.airPressure = airPressure;
 		this.dateTime = dateTime;
 		this.floorsCount = floorsCount;
 	}
-
+	
 	public Integer getOctant() {
 		return octant;
 	}
@@ -39,6 +40,10 @@ public class GeneratorInput {
 
 	public Double getWindDirection() {
 		return windDirection;
+	}
+
+	public Double getTemperature() {
+		return temperature;
 	}
 
 	public Double getAirPressure() {
@@ -57,13 +62,13 @@ public class GeneratorInput {
 	public String toString() {
 		return "GeneratorInput [octant=" + octant + ", location=" + location
 				+ ", windSpeed=" + windSpeed + ", windDirection="
-				+ windDirection + ", airPressure=" + airPressure
-				+ ", dateTime=" + dateTime + ", floorsCount=" + floorsCount
-				+ "]";
+				+ windDirection + ", temperature=" + temperature
+				+ ", airPressure=" + airPressure + ", dateTime=" + dateTime
+				+ ", floorsCount=" + floorsCount + "]";
 	}
 
 	// private:
-	
+
 	public GeneratorInput() {
 	}
 
@@ -81,6 +86,10 @@ public class GeneratorInput {
 
 	public void setWindDirection(Double windDirection) {
 		this.windDirection = windDirection;
+	}
+
+	public void setTemperature(Double temperature) {
+		this.temperature = temperature;
 	}
 
 	public void setAirPressure(Double airPressure) {

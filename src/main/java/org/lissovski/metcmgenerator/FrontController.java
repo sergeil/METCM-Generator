@@ -3,7 +3,9 @@ package org.lissovski.metcmgenerator;
 import java.util.List;
 import java.util.Vector;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.MessageBox;
 import org.lissovski.metcmgenerator.exporter.ReportExporter;
 import org.lissovski.metcmgenerator.generator.GeneratorImpl;
 import org.lissovski.metcmgenerator.generator.GeneratorInputSpecification;
@@ -34,32 +36,48 @@ public class FrontController {
         
         List<GeneratorOutput> generatorOutputs = new Vector<GeneratorOutput>();
         
-        // triggering report generation
-        rootShell.addGenerateReportListener(new GenerateReportListener() {
-			public void generateReport(GenerateReportEvent event) {
-				GeneratorOutput output = generator.generate(event.getRootShellValues().createGeneratorInput());
-				rootShell.reloadReportRows(output.getFloors());
-				
-				generatorOutputs.add(output);
-			}
-		});
+//        rootShell.addGenerateReportListener(new GenerateReportListener() {
+//			public void generateReport(GenerateReportEvent event) {
+//				GeneratorOutput output = generator.generate(event.getRootShellValues().createGeneratorInput());
+//				rootShell.reloadReportRows(output.getFloors());
+//				
+//				generatorOutputs.add(output);
+//			}
+//		});
         
-        // updating settings
         rootShell.addGenerateReportListener(new GenerateReportListener() {
 			@Override
 			public void generateReport(GenerateReportEvent event) {
-				List<String> validationErrors = GeneratorInputSpecification.validate(event.getRootShellValues().createGeneratorInput());
-				
-				System.out.println(" >>>> ");
-				System.out.println(validationErrors);
+				List<String> validationErrors = GeneratorInputSpecification.validate(
+					event.getRootShellValues()
+				);
 				
 				if (validationErrors.size() == 0) {
+					// updating settings
 					appSettings.setRootShellSettings(event.getRootShellValues());
 					appSettings.save();
 					
-					rootShell.setExportEnabled(true);					
+					// making it possible to do an export
+					rootShell.setExportEnabled(true);	
+					
+					// triggering report generation
+					GeneratorOutput output = generator.generate(event.getRootShellValues().createGeneratorInput());
+					rootShell.reloadReportRows(output.getFloors());
+					
+					generatorOutputs.add(output);
 				} else {
-					System.out.println("errors: " + validationErrors);
+					// showing validation errors:
+					StringBuffer errorMessage = new StringBuffer();
+					errorMessage.append("Some errors were found: \n");
+					
+					for (String error : validationErrors) {
+						errorMessage.append(" * " + error + "\n");
+					}
+					
+					MessageBox errorDialog = new MessageBox(rootShell, SWT.ICON_ERROR);
+					errorDialog.setText("Unable to proceed");
+					errorDialog.setMessage(errorMessage.toString());
+					errorDialog.open();
 				}
 			}
 		});

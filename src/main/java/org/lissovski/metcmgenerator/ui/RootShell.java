@@ -47,6 +47,7 @@ public class RootShell extends Shell {
 	private Text locationText;
 	private Text windSpeedText;
 	private Text windDirectionText;
+	private Text temperatureText;
 	private Text airPressureText;
 	private Table reportTable;
 	private DateTime dateInput;
@@ -79,7 +80,7 @@ public class RootShell extends Shell {
 	
 	private void createGroundValuesGroup(Composite owningContainer) {
 		Group groundValuesGroup = new Group(owningContainer, SWT.SHADOW_ETCHED_OUT);
-        GridLayout groundValuesGroupLayout = new GridLayout(5, false);
+        GridLayout groundValuesGroupLayout = new GridLayout(6, false);
         groundValuesGroup.setText("Ground values");
         groundValuesGroup.setLayout(groundValuesGroupLayout);
         
@@ -96,7 +97,7 @@ public class RootShell extends Shell {
         adjustWidth(locationText);
         
         windSpeedText = new Text(groundValuesGroup, inputMask);
-        windSpeedText.setMessage("Wind speed");
+        windSpeedText.setMessage("Wind speed (kn)");
     	windSpeedText.setText(settings.getWindSpeed());
         adjustWidth(windSpeedText);
         
@@ -104,6 +105,11 @@ public class RootShell extends Shell {
         windDirectionText.setMessage("Wind direction");
     	windDirectionText.setText(settings.getWindDirection());
         adjustWidth(windDirectionText);
+        
+        temperatureText = new Text(groundValuesGroup, inputMask);
+        temperatureText.setMessage("Temperature");
+        temperatureText.setText(settings.getTemperature());
+        adjustWidth(temperatureText);
         
         airPressureText = new Text(groundValuesGroup, inputMask);
         airPressureText.setMessage("Air pressure");
@@ -167,13 +173,14 @@ public class RootShell extends Shell {
         generateButton.setText("Generate");
         generateButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
-				if (isGroundValuesSetValid()) {
+//				if (isGroundValuesSetValid()) {
 //					exportReportEventValues.rootShellValues = createGeneratorInput();
 					exportReportEventValues.rootShellValues = new RootShellValues(
 						octantText.getText(), 
 						locationText.getText(), 
 						windSpeedText.getText(), 
-						windDirectionText.getText(), 
+						windDirectionText.getText(),
+						temperatureText.getText(),
 						airPressureText.getText(), 
 						null, 
 						null, 
@@ -184,7 +191,7 @@ public class RootShell extends Shell {
 					for (GenerateReportListener listener : generateReportListeners) {
 						listener.generateReport(event);		
 					}
-				}
+//				}
 			}
         });
         
@@ -227,24 +234,6 @@ public class RootShell extends Shell {
 		// FIXME validate if Integers, Doubles
 		
 		return true;
-	}
-	
-	private GeneratorInput createGeneratorInput() {
-		Calendar cal = Calendar.getInstance();
-		cal.set(
-			dateInput.getYear(), dateInput.getMonth(), dateInput.getDay(), 
-			timeInput.getHours(), timeInput.getMinutes()
-		);
-		
-		return new GeneratorInput(
-			Integer.parseInt(octantText.getText()),
-			Integer.parseInt(locationText.getText()), 
-			Double.parseDouble(windSpeedText.getText()), 
-			Double.parseDouble(windDirectionText.getText()), 
-			Double.parseDouble(airPressureText.getText()),
-			cal.getTime(),
-			Integer.parseInt(floorsCountText.getText())
-		);
 	}
 	
 	protected void checkSubclass() {
