@@ -24,22 +24,22 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-import org.lissovski.metcmgenerator.generator.GeneratorInput;
 import org.lissovski.metcmgenerator.generator.Floor;
+import org.lissovski.metcmgenerator.generator.GeneratorInput;
 import org.lissovski.metcmgenerator.ui.events.ExportReportEvent;
 import org.lissovski.metcmgenerator.ui.events.ExportReportListener;
 import org.lissovski.metcmgenerator.ui.events.GenerateReportEvent;
 import org.lissovski.metcmgenerator.ui.events.GenerateReportListener;
 
 public class RootShell extends Shell {
-	private GeneratorInput settings;
+	private RootShellValues settings;
 	
 	private List<GenerateReportListener> generateReportListeners = new Vector<GenerateReportListener>();
 	private List<ExportReportListener> exportReportListeners = new Vector<ExportReportListener>();
 	
 	private class ExportReportEventValues {
-		public List<Floor> rows;
-		public GeneratorInput generatorConfigurationData;
+		public List<Floor> floors;
+		public RootShellValues rootShellValues;
 	}
 	private ExportReportEventValues exportReportEventValues = new ExportReportEventValues();
 	
@@ -87,37 +87,27 @@ public class RootShell extends Shell {
         
         octantText = new Text(groundValuesGroup, inputMask);
         octantText.setMessage("Octant");
-        if (settings.getOctant() != null) {
-        	octantText.setText(Integer.toString(settings.getOctant()));        	
-        }
+    	octantText.setText(settings.getOctant());
         adjustWidth(octantText);
         
         locationText = new Text(groundValuesGroup, inputMask);
         locationText.setMessage("Location");
-        if (settings.getLocation() != null) {
-        	locationText.setText(Integer.toString(settings.getLocation()));
-        }
+    	locationText.setText(settings.getLocation());
         adjustWidth(locationText);
         
         windSpeedText = new Text(groundValuesGroup, inputMask);
         windSpeedText.setMessage("Wind speed");
-        if (settings.getWindSpeed() != null) {
-        	windSpeedText.setText(Double.toString(settings.getWindSpeed()));
-        }
+    	windSpeedText.setText(settings.getWindSpeed());
         adjustWidth(windSpeedText);
         
         windDirectionText = new Text(groundValuesGroup, inputMask);
         windDirectionText.setMessage("Wind direction");
-        if (settings.getWindDirection() != null) {
-        	windDirectionText.setText(Double.toString(settings.getWindDirection()));
-        }
+    	windDirectionText.setText(settings.getWindDirection());
         adjustWidth(windDirectionText);
         
         airPressureText = new Text(groundValuesGroup, inputMask);
         airPressureText.setMessage("Air pressure");
-        if (settings.getAirPressure() != null) {
-        	airPressureText.setText(Double.toString(settings.getAirPressure()));
-        }
+    	airPressureText.setText(settings.getAirPressure());
         adjustWidth(airPressureText);
 	}
 	
@@ -130,7 +120,7 @@ public class RootShell extends Shell {
         timeInput = new DateTime(dateTimeGroup, SWT.TIME | SWT.BORDER);
 	}
 
-	public RootShell(Display display, GeneratorInput settings) {
+	public RootShell(Display display, RootShellValues settings) {
 		super(display);
 		
 		this.settings = settings;
@@ -170,9 +160,7 @@ public class RootShell extends Shell {
         floorsCountLabel.setText("Floors");
         
         floorsCountText = new Text(actionButtonsGroup, SWT.BORDER);
-        if (settings.getFloorsCount() != null) {
-        	floorsCountText.setText(Integer.toString(settings.getFloorsCount()));
-        }
+    	floorsCountText.setText(settings.getFloorsCount());
         adjustWidth(floorsCountText, 3);
         
         Button generateButton = new Button(actionButtonsGroup, SWT.NULL);
@@ -180,9 +168,19 @@ public class RootShell extends Shell {
         generateButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
 				if (isGroundValuesSetValid()) {
-					exportReportEventValues.generatorConfigurationData = createGeneratorInput();
+//					exportReportEventValues.rootShellValues = createGeneratorInput();
+					exportReportEventValues.rootShellValues = new RootShellValues(
+						octantText.getText(), 
+						locationText.getText(), 
+						windSpeedText.getText(), 
+						windDirectionText.getText(), 
+						airPressureText.getText(), 
+						null, 
+						null, 
+						floorsCountText.getText()
+					);
 					
-					GenerateReportEvent event = new GenerateReportEvent(this, exportReportEventValues.generatorConfigurationData);
+					GenerateReportEvent event = new GenerateReportEvent(this, exportReportEventValues.rootShellValues);
 					for (GenerateReportListener listener : generateReportListeners) {
 						listener.generateReport(event);		
 					}
@@ -191,15 +189,15 @@ public class RootShell extends Shell {
         });
         
         exportButton = new Button(actionButtonsGroup, SWT.NULL);
-        exportButton.setEnabled(false);
+        exportButton.setEnabled(false); // it must not be possible to export report unless it is generated
         exportButton.setText("Export");
         exportButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
 				if (isReportTableValid()) {
 					ExportReportEvent event = new ExportReportEvent(
 						this, 
-						exportReportEventValues.generatorConfigurationData, 
-						exportReportEventValues.rows
+						exportReportEventValues.rootShellValues, 
+						exportReportEventValues.floors
 					);
 					
 					for (ExportReportListener listener : exportReportListeners) {
@@ -253,7 +251,7 @@ public class RootShell extends Shell {
 	}
 	
 	public void reloadReportRows(List<Floor> rows) {
-		exportReportEventValues.rows = rows;
+		exportReportEventValues.floors = rows;
 		
 		reportTable.removeAll();
 		

@@ -1,29 +1,21 @@
 package org.lissovski.metcmgenerator.settings;
 
-import org.lissovski.metcmgenerator.generator.GeneratorInput;
-import org.lissovski.metcmgenerator.ui.SaveReportConfig;
+import org.lissovski.metcmgenerator.ui.RootShellValues;
+import org.lissovski.metcmgenerator.ui.SaveReportShellValues;
 
 public class ApplicationSettings {
 	private SettingsManager settingsManager;
 	
-	private GeneratorInput generatorShellSettings;
-	private SaveReportConfig saveReportShellSettings;
+	private RootShellValues rootShellSettings;
+	private SaveReportShellValues saveReportShellSettings;
 	
 	public ApplicationSettings(SettingsManager settingsManager,
-			GeneratorInput generatorShellSettings,
-			SaveReportConfig saveReportShellSettings) {
+			RootShellValues rootShellSettings,
+			SaveReportShellValues saveReportShellSettings) {
 		
 		this.settingsManager = settingsManager;
-		this.generatorShellSettings = generatorShellSettings;
+		this.rootShellSettings = rootShellSettings;
 		this.saveReportShellSettings = saveReportShellSettings;
-	}
-	
-	public GeneratorInput getGeneratorShellSettings() {
-		return generatorShellSettings;
-	}
-	
-	public SaveReportConfig getSaveReportShellSettings() {
-		return saveReportShellSettings;
 	}
 
 	public void save() {
@@ -34,16 +26,24 @@ public class ApplicationSettings {
 		this.settingsManager = settingsManager;
 	}
 	
-	// private:
-	
-	public void setGeneratorShellSettings(GeneratorInput generatorShellSettings) {
-		this.generatorShellSettings = generatorShellSettings;
+	public RootShellValues getRootShellSettings() {
+		return rootShellSettings;
 	}
 
-	public void setSaveReportShellSettings(SaveReportConfig saveReportShellSettings) {
-		this.saveReportShellSettings = saveReportShellSettings;
+	public SaveReportShellValues getSaveReportShellSettings() {
+		return saveReportShellSettings;
 	}
 	
+	// private:
+
 	public ApplicationSettings() {
+	}
+
+	public void setRootShellSettings(RootShellValues rootShellSettings) {
+		this.rootShellSettings = rootShellSettings;
+	}
+
+	public void setSaveReportShellSettings(SaveReportShellValues saveReportShellSettings) {
+		this.saveReportShellSettings = saveReportShellSettings;
 	}
 }

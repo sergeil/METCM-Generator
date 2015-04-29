@@ -3,8 +3,8 @@ package org.lissovski.metcmgenerator.settings;
 import java.io.File;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.lissovski.metcmgenerator.generator.GeneratorInput;
-import org.lissovski.metcmgenerator.ui.SaveReportConfig;
+import org.lissovski.metcmgenerator.ui.RootShellValues;
+import org.lissovski.metcmgenerator.ui.SaveReportShellValues;
 
 public class SettingsManager {
 	private ObjectMapper mapper = new ObjectMapper();
@@ -19,7 +19,7 @@ public class SettingsManager {
 		File settingsFile = getSettingsFile();
 		
 		if (!settingsFile.exists() || settingsFile.isDirectory()) {
-			save(new ApplicationSettings(this, new GeneratorInput(), new SaveReportConfig()));
+			save(new ApplicationSettings(this, new RootShellValues(), new SaveReportShellValues()));
 		}
 	}
 

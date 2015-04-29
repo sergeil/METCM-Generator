@@ -1,9 +1,9 @@
 package org.lissovski.metcmgenerator.ui;
 
-public class SaveReportConfig {
+public class SaveReportShellValues {
 	private String directoryPath;
 
-	public SaveReportConfig(String directoryPath) {
+	public SaveReportShellValues(String directoryPath) {
 		this.directoryPath = directoryPath;
 	}
 
@@ -13,7 +13,7 @@ public class SaveReportConfig {
 	
 	// private:
 	
-	public SaveReportConfig() {
+	public SaveReportShellValues() {
 	}
 
 	public void setDirectoryPath(String directoryPath) {

@@ -29,7 +29,7 @@ public class ExportDialog extends Dialog {
 		saveReportListeners.add(listener);
 	}
 	
-	public ExportDialog(Shell parent, SaveReportConfig settings) {
+	public ExportDialog(Shell parent, SaveReportShellValues settings) {
 		super(parent);
 
 		shell = new Shell(parent);
@@ -89,7 +89,7 @@ public class ExportDialog extends Dialog {
 		saveButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
 				if (!outputDirText.getText().equals("")) {
-					SaveReportEvent event = new SaveReportEvent(this, new SaveReportConfig(outputDirText.getText()));
+					SaveReportEvent event = new SaveReportEvent(this, new SaveReportShellValues(outputDirText.getText()));
 					
 					for (SaveReportListener listener : saveReportListeners) {
 						listener.saveReport(event);

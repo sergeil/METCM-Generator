@@ -2,25 +2,25 @@ package org.lissovski.metcmgenerator.ui.events;
 
 import java.util.EventObject;
 
-import org.lissovski.metcmgenerator.generator.GeneratorInput;
+import org.lissovski.metcmgenerator.ui.RootShellValues;
 
 public class GenerateReportEvent extends EventObject {
 	private static final long serialVersionUID = 4859529483681982074L;
 	
-	private GeneratorInput generatorInput;
+	private RootShellValues rootShellValues;
 	
-	public GenerateReportEvent(Object source, GeneratorInput generatorInput) {
+	public GenerateReportEvent(Object source, RootShellValues rootShellValues) {
 		super(source);
 		
-		this.generatorInput = generatorInput;
+		this.rootShellValues = rootShellValues;
 	}
 
-	public GeneratorInput getGeneratorInput() {
-		return generatorInput;
+	public RootShellValues getRootShellValues() {
+		return rootShellValues;
 	}
 
 	@Override
 	public String toString() {
-		return generatorInput.toString();
+		return rootShellValues.toString();
 	}
 }

@@ -30,14 +30,14 @@ public class FrontController {
         ApplicationSettings appSettings = settingsManager.load();
         
         Display display = new Display();
-        RootShell rootShell = new RootShell(display, appSettings.getGeneratorShellSettings());
+        RootShell rootShell = new RootShell(display, appSettings.getRootShellSettings());
         
         List<GeneratorOutput> generatorOutputs = new Vector<GeneratorOutput>();
         
         // triggering report generation
         rootShell.addGenerateReportListener(new GenerateReportListener() {
 			public void generateReport(GenerateReportEvent event) {
-				GeneratorOutput output = generator.generate(event.getGeneratorInput());
+				GeneratorOutput output = generator.generate(event.getRootShellValues().createGeneratorInput());
 				rootShell.reloadReportRows(output.getFloors());
 				
 				generatorOutputs.add(output);
@@ -48,13 +48,13 @@ public class FrontController {
         rootShell.addGenerateReportListener(new GenerateReportListener() {
 			@Override
 			public void generateReport(GenerateReportEvent event) {
-				List<String> validationErrors = GeneratorInputSpecification.validate(event.getGeneratorInput());
+				List<String> validationErrors = GeneratorInputSpecification.validate(event.getRootShellValues().createGeneratorInput());
 				
 				System.out.println(" >>>> ");
 				System.out.println(validationErrors);
 				
 				if (validationErrors.size() == 0) {
-					appSettings.setGeneratorShellSettings(event.getGeneratorInput());
+					appSettings.setRootShellSettings(event.getRootShellValues());
 					appSettings.save();
 					
 					rootShell.setExportEnabled(true);					
@@ -73,7 +73,7 @@ public class FrontController {
 					@Override
 					public void saveReport(SaveReportEvent event) {
 						GeneratorOutput lastOutput = generatorOutputs.get(generatorOutputs.size()-1);
-						exporter.export(lastOutput, event.getSaveReportConfig().getDirectoryPath());
+						exporter.export(lastOutput, event.getSaveReportShellValues().getDirectoryPath());
 						
 						dialog.close();
 					}
@@ -83,7 +83,7 @@ public class FrontController {
 				dialog.addSaveReportListener(new SaveReportListener() {
 					@Override
 					public void saveReport(SaveReportEvent event) {
-						appSettings.setSaveReportShellSettings(event.getSaveReportConfig());
+						appSettings.setSaveReportShellSettings(event.getSaveReportShellValues());
 						appSettings.save();
 					}
 				});

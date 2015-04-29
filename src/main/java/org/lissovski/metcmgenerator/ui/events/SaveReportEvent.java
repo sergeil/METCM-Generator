@@ -2,20 +2,20 @@ package org.lissovski.metcmgenerator.ui.events;
 
 import java.util.EventObject;
 
-import org.lissovski.metcmgenerator.ui.SaveReportConfig;
+import org.lissovski.metcmgenerator.ui.SaveReportShellValues;
 
 public class SaveReportEvent extends EventObject {
 	private static final long serialVersionUID = -4577307846272312194L;
 
-	private SaveReportConfig saveReportConfig;
+	private SaveReportShellValues saveReportShellValues;
 
-	public SaveReportEvent(Object source, SaveReportConfig saveReportConfig) {
+	public SaveReportEvent(Object source, SaveReportShellValues saveReportShellValues) {
 		super(source);
 		
-		this.saveReportConfig = saveReportConfig;
+		this.saveReportShellValues = saveReportShellValues;
 	}
 
-	public SaveReportConfig getSaveReportConfig() {
-		return saveReportConfig;
+	public SaveReportShellValues getSaveReportShellValues() {
+		return saveReportShellValues;
 	}
 }
