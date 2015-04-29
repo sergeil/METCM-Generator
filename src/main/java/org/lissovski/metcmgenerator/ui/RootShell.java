@@ -1,12 +1,9 @@
 package org.lissovski.metcmgenerator.ui;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.FontMetrics;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowData;
@@ -25,7 +22,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.lissovski.metcmgenerator.generator.Floor;
-import org.lissovski.metcmgenerator.generator.GeneratorInput;
 import org.lissovski.metcmgenerator.ui.events.ExportReportEvent;
 import org.lissovski.metcmgenerator.ui.events.ExportReportListener;
 import org.lissovski.metcmgenerator.ui.events.GenerateReportEvent;
@@ -171,7 +167,7 @@ public class RootShell extends Shell {
         reportTable = new Table(reportsGroup, SWT.BORDER | SWT.V_SCROLL);
         reportTable.setHeaderVisible(true);
         RowData reportTableLayoutData = new RowData();
-        reportTableLayoutData.height = 200;
+        reportTableLayoutData.height = 230;
         reportTable.setLayoutData(reportTableLayoutData);
         
         String [] columns = {
