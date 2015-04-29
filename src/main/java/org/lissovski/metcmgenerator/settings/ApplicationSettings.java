@@ -3,6 +3,9 @@ package org.lissovski.metcmgenerator.settings;
 import org.lissovski.metcmgenerator.ui.RootShellValues;
 import org.lissovski.metcmgenerator.ui.SaveReportShellValues;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class ApplicationSettings {
 	private SettingsManager settingsManager;
 	

@@ -3,6 +3,9 @@ package org.lissovski.metcmgenerator.generator;
 import java.util.List;
 import java.util.Vector;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class GeneratorOutput {
 	private GeneratorInput input;
 	private List<Floor> floors = new Vector<Floor>();

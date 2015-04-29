@@ -20,6 +20,9 @@ import org.eclipse.swt.widgets.Text;
 import org.lissovski.metcmgenerator.ui.events.SaveReportEvent;
 import org.lissovski.metcmgenerator.ui.events.SaveReportListener;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class ExportDialog extends Dialog {
 	Shell shell;
 	

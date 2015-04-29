@@ -2,6 +2,9 @@ package org.lissovski.metcmgenerator.generator;
 
 import java.util.Date;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class GeneratorInput {
 	private Integer octant;
 	private Integer location;

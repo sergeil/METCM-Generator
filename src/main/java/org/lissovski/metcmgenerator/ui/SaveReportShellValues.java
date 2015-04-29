@@ -1,5 +1,8 @@
 package org.lissovski.metcmgenerator.ui;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class SaveReportShellValues {
 	private String directoryPath;
 

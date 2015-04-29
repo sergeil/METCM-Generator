@@ -27,6 +27,9 @@ import org.lissovski.metcmgenerator.ui.events.ExportReportListener;
 import org.lissovski.metcmgenerator.ui.events.GenerateReportEvent;
 import org.lissovski.metcmgenerator.ui.events.GenerateReportListener;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class RootShell extends Shell {
 	private RootShellValues settings;
 	

@@ -7,6 +7,9 @@ import java.util.Vector;
 
 import org.lissovski.metcmgenerator.ui.RootShellValues;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class GeneratorInputSpecification {
 	private static class Field {
 		public String label;

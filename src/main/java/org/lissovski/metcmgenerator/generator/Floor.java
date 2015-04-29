@@ -1,5 +1,8 @@
 package org.lissovski.metcmgenerator.generator;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class Floor {
 	private Integer floor;
 	private Double windDirection;

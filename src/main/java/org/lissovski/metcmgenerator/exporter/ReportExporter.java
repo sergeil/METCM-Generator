@@ -8,6 +8,9 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.lissovski.metcmgenerator.generator.GeneratorOutput;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class ReportExporter {
 	private class FormatUtils {
 		public String padRight(String input) {

@@ -6,6 +6,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.lissovski.metcmgenerator.ui.RootShellValues;
 import org.lissovski.metcmgenerator.ui.SaveReportShellValues;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class SettingsManager {
 	private ObjectMapper mapper = new ObjectMapper();
 	

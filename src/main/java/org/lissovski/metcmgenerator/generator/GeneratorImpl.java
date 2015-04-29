@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class GeneratorImpl implements ReportGenerator {
 	private int randInt(int min, int max) {
 	    Random rand = new Random();

@@ -4,6 +4,9 @@ import java.util.Date;
 
 import org.lissovski.metcmgenerator.generator.GeneratorInput;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class RootShellValues {
 	private String octant ="";
 	private String location = "";

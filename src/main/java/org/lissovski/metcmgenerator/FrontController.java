@@ -22,6 +22,9 @@ import org.lissovski.metcmgenerator.ui.events.GenerateReportListener;
 import org.lissovski.metcmgenerator.ui.events.SaveReportEvent;
 import org.lissovski.metcmgenerator.ui.events.SaveReportListener;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class FrontController {
 	
 	public static void main(String[] args) {

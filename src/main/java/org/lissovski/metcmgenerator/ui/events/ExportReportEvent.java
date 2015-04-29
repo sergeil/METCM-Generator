@@ -7,6 +7,9 @@ import java.util.Vector;
 import org.lissovski.metcmgenerator.generator.Floor;
 import org.lissovski.metcmgenerator.ui.RootShellValues;
 
+/**
+ * @author Sergei Lissovski <sergei.lissovski@gmail.com>
+ */
 public class ExportReportEvent extends EventObject {
 	private static final long serialVersionUID = 7888191502333315597L;
 	
