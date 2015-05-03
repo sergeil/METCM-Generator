@@ -39,15 +39,6 @@ public class FrontController {
         
         List<GeneratorOutput> generatorOutputs = new Vector<GeneratorOutput>();
         
-//        rootShell.addGenerateReportListener(new GenerateReportListener() {
-//			public void generateReport(GenerateReportEvent event) {
-//				GeneratorOutput output = generator.generate(event.getRootShellValues().createGeneratorInput());
-//				rootShell.reloadReportRows(output.getFloors());
-//				
-//				generatorOutputs.add(output);
-//			}
-//		});
-        
         rootShell.addGenerateReportListener(new GenerateReportListener() {
 			@Override
 			public void generateReport(GenerateReportEvent event) {

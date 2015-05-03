@@ -1,5 +1,6 @@
 package org.lissovski.metcmgenerator.ui;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.lissovski.metcmgenerator.generator.GeneratorInput;
@@ -34,6 +35,11 @@ public class RootShellValues {
 	}
 
 	public GeneratorInput createGeneratorInput() {
+		Calendar dt = Calendar.getInstance();
+		dt.setTime(date);
+		dt.set(Calendar.HOUR_OF_DAY, time.getHours());
+		dt.set(Calendar.MINUTE, time.getMinutes());
+		
 		return new GeneratorInput(
 			Integer.parseInt(octant),
 			Integer.parseInt(location), 
@@ -41,7 +47,7 @@ public class RootShellValues {
 			Double.parseDouble(windDirection), 
 			Double.parseDouble(temperature),
 			Double.parseDouble(airPressure),
-			null, // TODO
+			dt.getTime(),
 			Integer.parseInt(floorsCount)
 		);
 	}

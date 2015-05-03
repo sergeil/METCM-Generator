@@ -1,11 +1,9 @@
 package org.lissovski.metcmgenerator.exporter;
 
-import java.io.StringWriter;
-import java.util.Properties;
+import java.util.Date;
 
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
+import org.lissovski.metcmgenerator.generator.Floor;
+import org.lissovski.metcmgenerator.generator.GeneratorInput;
 import org.lissovski.metcmgenerator.generator.GeneratorOutput;
 
 /**
@@ -13,38 +11,46 @@ import org.lissovski.metcmgenerator.generator.GeneratorOutput;
  */
 public class ReportExporter {
 	private class FormatUtils {
-		public String padRight(String input) {
-			return String.format("%-6s", input);
-		}
-		
 		public String padLeft(String input, Integer num, String with) {
-			return String.format("%"+num+"s", input).replace("" , with);
-		}
-		
-		public String padFloor(String input) {
-			return padLeft(input, 2, "0");
+			return String.format("%"+num+"s", input).replace(" ", with);
 		}
 	}
 	
 	public void export(GeneratorOutput generatorOutput, String path) {
-		StringWriter writer = new StringWriter();
+		FormatUtils utils = new FormatUtils();
 		
-		Properties velocityConfig = new Properties();
-		velocityConfig.setProperty("resource.loader", "file");
-		velocityConfig.setProperty("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.FileResourceLoader");
-		velocityConfig.setProperty("file.resource.loader.path", "/Users/sergeil/Documents/workspaces/eclipse-rcp/METCM Generator/templates");
+		GeneratorInput input = generatorOutput.getInput();
+		Date date = input.getDateTime();
 		
-		VelocityEngine ve = new VelocityEngine();
-		ve.init(velocityConfig);
+		String weatherStationLocation = "567894";
+		StringBuilder output = new StringBuilder();
 		
-		VelocityContext context = new VelocityContext();
-		context.put("u", new FormatUtils());
-		context.put("floors", generatorOutput.getFloors());
-		context.put("gv", generatorOutput.getInput()); // ground values
+		// header
+		output.append("METCM" + input.getOctant() + " " + weatherStationLocation);
+		output.append(" ");
+		output.append(utils.padLeft(Integer.toString(date.getDate()), 2, "0"));
+		output.append(utils.padLeft(Integer.toString(date.getHours()), 2, "0"));
+		output.append(Integer.toString(date.getMinutes()).substring(0, 1));
+		output.append("0"); // duration
 		
-		Template tpl = ve.getTemplate("report.vm");
-		tpl.merge(context, writer);
+		output.append(" ");
 		
-		System.out.println(writer.toString());
+		output.append("010");
+		output.append(Integer.toString(input.getAirPressure().intValue()).substring(1));
+		
+		output.append("\n");
+		
+		for (Floor floor : generatorOutput.getFloors()) {
+			output.append(utils.padLeft(Integer.toString(floor.getFloor()), 2, "0")); // floor
+			output.append(utils.padLeft(Integer.toString(floor.getWindDirection().intValue()), 3, "0")); // wind direction
+			output.append(utils.padLeft(Integer.toString(floor.getWindSpeed().intValue()), 3, "0")); // wind speed
+			output.append(" ");
+			output.append(utils.padLeft(Integer.toString(floor.getTemperature().intValue()), 4, "0"));
+			output.append(utils.padLeft(Integer.toString(floor.getAirPressure().intValue()), 4, "0"));
+			
+			output.append("\n"); // next row
+		}
+		
+		System.out.println(output.toString());
 	}
 }

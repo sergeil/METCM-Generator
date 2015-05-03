@@ -1,5 +1,7 @@
 package org.lissovski.metcmgenerator.ui;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -197,6 +199,15 @@ public class RootShell extends Shell {
         generateButton.setText("Generate");
         generateButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
+				Calendar year = Calendar.getInstance();
+				year.set(Calendar.DAY_OF_MONTH, dateInput.getDay());
+				year.set(Calendar.MONTH, dateInput.getMonth());
+				year.set(Calendar.YEAR, dateInput.getYear());
+				
+				Calendar time = Calendar.getInstance();
+				time.set(Calendar.HOUR_OF_DAY, timeInput.getHours());
+				time.set(Calendar.MINUTE, timeInput.getMinutes());
+				
 				exportReportEventValues.rootShellValues = new RootShellValues(
 					octantText.getText(), 
 					locationText.getText(), 
@@ -204,8 +215,8 @@ public class RootShell extends Shell {
 					windDirectionText.getText(),
 					temperatureText.getText(),
 					airPressureText.getText(), 
-					null, 
-					null, 
+					year.getTime(), 
+					time.getTime(), 
 					floorsCountText.getText()
 				);
 				
