@@ -1,7 +1,6 @@
 package org.lissovski.metcmgenerator.ui;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -84,39 +83,57 @@ public class RootShell extends Shell {
         
         final int inputMask = SWT.BORDER;
         
+        Label octantLabel = new Label(groundValuesGroup, SWT.NULL);
+        octantLabel.setText("Octant:");
+        
         octantText = new Text(groundValuesGroup, inputMask);
-        octantText.setMessage("Octant");
-        octantText.setToolTipText("Octant");
+//        octantText.setMessage("Octant");
+//        octantText.setToolTipText("Octant");
     	octantText.setText(settings.getOctant());
         adjustWidth(octantText);
         
+        Label locationLabel = new Label(groundValuesGroup, SWT.NULL);
+        locationLabel.setText("Location:");
+        
         locationText = new Text(groundValuesGroup, inputMask);
-        locationText.setMessage("Location");
-        locationText.setToolTipText("Location");
+//        locationText.setMessage("Location");
+//        locationText.setToolTipText("Location");
     	locationText.setText(settings.getLocation());
         adjustWidth(locationText);
         
+        Label windSpeedLabel = new Label(groundValuesGroup, SWT.NULL);
+        windSpeedLabel.setText("Wind speed (kn):");
+        
         windSpeedText = new Text(groundValuesGroup, inputMask);
-        windSpeedText.setMessage("Wind speed (kn)");
-        windSpeedText.setToolTipText("Wind speed (kn)");
+//        windSpeedText.setMessage("Wind speed (kn)");
+//        windSpeedText.setToolTipText("Wind speed (kn)");
     	windSpeedText.setText(settings.getWindSpeed());
         adjustWidth(windSpeedText);
         
+        Label windDirectionLabel = new Label(groundValuesGroup, SWT.NULL);
+        windDirectionLabel.setText("Wind direction:");
+        
         windDirectionText = new Text(groundValuesGroup, inputMask);
-        windDirectionText.setMessage("Wind direction");
-        windDirectionText.setToolTipText("Wind direction");
+//        windDirectionText.setMessage("Wind direction");
+//        windDirectionText.setToolTipText("Wind direction");
     	windDirectionText.setText(settings.getWindDirection());
         adjustWidth(windDirectionText);
         
+        Label temperatureLabel = new Label(groundValuesGroup, SWT.NULL);
+        temperatureLabel.setText("Temperature:");
+        
         temperatureText = new Text(groundValuesGroup, inputMask);
-        temperatureText.setMessage("Temperature");
-        temperatureText.setToolTipText("Temperature");
+//        temperatureText.setMessage("Temperature");
+//        temperatureText.setToolTipText("Temperature");
         temperatureText.setText(settings.getTemperature());
         adjustWidth(temperatureText);
         
+        Label airPressureLabel = new Label(groundValuesGroup, SWT.NULL);
+        airPressureLabel.setText("Air pressure:");
+        
         airPressureText = new Text(groundValuesGroup, inputMask);
-        airPressureText.setMessage("Air pressure");
-        airPressureText.setToolTipText("Air pressure");
+//        airPressureText.setMessage("Air pressure");
+//        airPressureText.setToolTipText("Air pressure");
     	airPressureText.setText(settings.getAirPressure());
         adjustWidth(airPressureText);
         
@@ -149,15 +166,16 @@ public class RootShell extends Shell {
 
 	public RootShell(Display display, RootShellValues settings) {
 		super(display, SWT.CLOSE | SWT.TITLE | SWT.MIN);
+		setText("METCM generator");
 		
 		this.settings = settings;
 		
 		setLayout(new GridLayout(2, false));
         
         Composite leftContainer = new Composite(this, SWT.NULL);
-        RowLayout topContainerLayout = new RowLayout(SWT.VERTICAL);
-        topContainerLayout.fill = true;
-        leftContainer.setLayout(topContainerLayout);
+        RowLayout leftContainerLayout = new RowLayout(SWT.VERTICAL);
+//        leftContainerLayout.fill = true;
+        leftContainer.setLayout(leftContainerLayout);
         
         createGroundValuesGroup(leftContainer);
         createDateTimeGroup(leftContainer);
@@ -172,7 +190,7 @@ public class RootShell extends Shell {
         reportTable = new Table(reportsGroup, SWT.BORDER | SWT.V_SCROLL);
         reportTable.setHeaderVisible(true);
         RowData reportTableLayoutData = new RowData();
-        reportTableLayoutData.height = 230;
+        reportTableLayoutData.height = 355;
         reportTable.setLayoutData(reportTableLayoutData);
         
         String [] columns = {
@@ -232,23 +250,17 @@ public class RootShell extends Shell {
         exportButton.setText("Export");
         exportButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
-				if (isReportTableValid()) {
-					ExportReportEvent event = new ExportReportEvent(
-						this, 
-						exportReportEventValues.rootShellValues, 
-						exportReportEventValues.floors
-					);
-					
-					for (ExportReportListener listener : exportReportListeners) {
-						listener.exportReport(event);
-					}
+				ExportReportEvent event = new ExportReportEvent(
+					this, 
+					exportReportEventValues.rootShellValues, 
+					exportReportEventValues.floors
+				);
+				
+				for (ExportReportListener listener : exportReportListeners) {
+					listener.exportReport(event);
 				}
 			}
         });
-	}
-	
-	private boolean isReportTableValid() {
-		return true;
 	}
 	
 	protected void checkSubclass() {

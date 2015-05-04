@@ -5,11 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import org.lissovski.metcmgenerator.generator.Floor;
 import org.lissovski.metcmgenerator.generator.GeneratorInput;
@@ -19,6 +20,8 @@ import org.lissovski.metcmgenerator.generator.GeneratorOutput;
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
  */
 public class ReportExporter {
+	private final static Logger logger = Logger.getLogger(ReportExporter.class.getName());
+	
 	public String padLeft(String input, Integer num, String with) {
 		return String.format("%"+num+"s", input).replace(" ", with);
 	}
@@ -30,35 +33,25 @@ public class ReportExporter {
 	}
 	
 	protected String createFilename() {
-		Calendar c = Calendar.getInstance();
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyy-HHmm");
 		
-		StringBuilder r = new StringBuilder();
-		
-		r.append("ilmateade-");
-		r.append(padLeft(Integer.toString(c.get(Calendar.DAY_OF_MONTH)), 2, "0"));
-		r.append(padLeft(Integer.toString(c.get(Calendar.MONTH) + 1), 2, "0"));
-		r.append(c.get(Calendar.YEAR));
-		r.append("-");
-		r.append(padLeft(Integer.toString(c.get(Calendar.HOUR_OF_DAY)), 2, "0"));
-		r.append(padLeft(Integer.toString(c.get(Calendar.MINUTE)), 2, "0"));
-		r.append(".txt");
-		
-		return r.toString();
+		return "ilmateade-" + dateFormatter.format(new Date()) + ".txt";
 	}
  	
 	public void export(GeneratorOutput generatorOutput, String path) {
 		GeneratorInput input = generatorOutput.getInput();
-		Date date = input.getDateTime();
 		
-		String weatherStationLocation = "567894";
+		Calendar c = Calendar.getInstance();
 		StringBuilder output = new StringBuilder();
 		
 		// header
-		output.append("METCM" + input.getOctant() + " " + weatherStationLocation);
+		output.append("METCM" + input.getOctant());
 		output.append(" ");
-		output.append(padLeft(Integer.toString(date.getDate()), 2, "0"));
-		output.append(padLeft(Integer.toString(date.getHours()), 2, "0"));
-		output.append(Integer.toString(date.getMinutes()).substring(0, 1));
+		output.append(Integer.toString(input.getLocation()));
+		output.append(" ");
+		output.append(padLeft(Integer.toString(c.get(Calendar.DAY_OF_MONTH)), 2, "0"));
+		output.append(padLeft(Integer.toString(c.get(Calendar.HOUR_OF_DAY)), 2, "0"));
+		output.append(Integer.toString(c.get(Calendar.MINUTE)).substring(0, 1));
 		output.append("0"); // duration
 		
 		output.append(" ");
@@ -82,11 +75,11 @@ public class ReportExporter {
 		try {
 			path += "/" + createFilename();
 			
-			System.out.println(path);
-			
 			writeToFile(path, output.toString());
+			
+			logger.info("A weather report has been successfully saved to " + path);
 		} catch (Exception e) {
-			e.printStackTrace(); // TODO
+			logger.severe("Unable to save a report to a file '" + path + "', error: " + e.getMessage());
 		}
 	}
 }
