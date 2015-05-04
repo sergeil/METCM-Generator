@@ -35,7 +35,7 @@ public class GeneratorInputSpecification {
 		
 		for (Map.Entry<String, Field> entry : values.entrySet()) {
 		    if (entry.getValue().value.replaceAll(" ", "").equals("")) {
-		    	errors.add(entry.getValue().label + "' must be provided");
+		    	errors.add(entry.getValue().label + " must be provided");
 		    	
 		    	emptyFields.add(entry.getKey());
 		    }
@@ -46,6 +46,14 @@ public class GeneratorInputSpecification {
 			
 			if (octant < 0 || octant > 8) {
 				errors.add("Octant must be between 0 and 8");
+			}
+		}
+		
+		if (!emptyFields.contains("location")) {
+			String location = values.get("location").value;
+			
+			if (location.length() != 6) {
+				errors.add("Location must always contain 6 digits");
 			}
 		}
 		

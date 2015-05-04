@@ -120,7 +120,7 @@ public class RootShell extends Shell {
         adjustWidth(windDirectionText);
         
         Label temperatureLabel = new Label(groundValuesGroup, SWT.NULL);
-        temperatureLabel.setText("Temperature:");
+        temperatureLabel.setText("Temperature (C):");
         
         temperatureText = new Text(groundValuesGroup, inputMask);
 //        temperatureText.setMessage("Temperature");
