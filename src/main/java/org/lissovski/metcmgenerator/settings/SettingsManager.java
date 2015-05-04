@@ -13,7 +13,8 @@ public class SettingsManager {
 	private ObjectMapper mapper = new ObjectMapper();
 	
 	private File getSettingsFile() {
-		String currentLocation = ClassLoader.getSystemClassLoader().getResource(".").getPath();
+		File file = new File(".");
+		String currentLocation = file.getAbsolutePath() + "/";
 		
 		return  new File(currentLocation + "settings.json");
 	}
