@@ -15,6 +15,7 @@ import org.lissovski.metcmgenerator.settings.ApplicationSettings;
 import org.lissovski.metcmgenerator.settings.SettingsManager;
 import org.lissovski.metcmgenerator.ui.ExportDialog;
 import org.lissovski.metcmgenerator.ui.RootShell;
+import org.lissovski.metcmgenerator.ui.SaveReportShellValues;
 import org.lissovski.metcmgenerator.ui.events.ExportReportEvent;
 import org.lissovski.metcmgenerator.ui.events.ExportReportListener;
 import org.lissovski.metcmgenerator.ui.events.GenerateReportEvent;
@@ -85,7 +86,10 @@ public class FrontController {
 					@Override
 					public void saveReport(SaveReportEvent event) {
 						GeneratorOutput lastOutput = generatorOutputs.get(generatorOutputs.size()-1);
-						exporter.export(lastOutput, event.getSaveReportShellValues().getDirectoryPath());
+						
+						SaveReportShellValues values = event.getSaveReportShellValues();
+						
+						exporter.export(lastOutput, values.getDirectoryPath(), values.isPrettyPrint());
 						
 						dialog.close();
 					}

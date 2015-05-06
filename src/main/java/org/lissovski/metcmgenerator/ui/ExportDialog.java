@@ -66,7 +66,10 @@ public class ExportDialog extends Dialog {
 					outputDirText.setText(dirPath);
 				}
 			}
-		}); 
+		});
+		
+		Button prettyPrintButton = new Button(shell, SWT.CHECK);
+		prettyPrintButton.setText("Use pretty print");
 		
 		// FIXME position buttons in a center of the buttonsContainer
 		GridData buttonsGroupLayoutData = new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);
@@ -92,7 +95,9 @@ public class ExportDialog extends Dialog {
 		saveButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
 				if (!outputDirText.getText().equals("")) {
-					SaveReportEvent event = new SaveReportEvent(this, new SaveReportShellValues(outputDirText.getText()));
+					SaveReportShellValues values = new SaveReportShellValues(outputDirText.getText(), prettyPrintButton.getSelection());
+					
+					SaveReportEvent event = new SaveReportEvent(this, values);
 					
 					for (SaveReportListener listener : saveReportListeners) {
 						listener.saveReport(event);

@@ -37,12 +37,20 @@ public class ReportExporter {
 		
 		return "ilmateade-" + dateFormatter.format(new Date()) + ".txt";
 	}
+	
+	protected void prettyPrintIfNeeded(StringBuilder output, boolean prettyPrint) {
+		if (prettyPrint) {
+			output.append(" ");
+		}
+	}
  	
-	public void export(GeneratorOutput generatorOutput, String path) {
+	public void export(GeneratorOutput generatorOutput, String path, boolean prettyPrint) {
 		GeneratorInput input = generatorOutput.getInput();
 		
 		Calendar c = Calendar.getInstance();
 		StringBuilder output = new StringBuilder();
+		
+		String newLineSeq = "\r\n";
 		
 		// header
 		output.append("METCM" + input.getOctant());
@@ -59,17 +67,23 @@ public class ReportExporter {
 		output.append("010");
 		output.append(Integer.toString(input.getAirPressure().intValue()).substring(1));
 		
-		output.append("\n");
+		output.append(newLineSeq);
 		
 		for (Floor floor : generatorOutput.getFloors()) {
 			output.append(padLeft(Integer.toString(floor.getFloor()), 2, "0")); // floor
+			prettyPrintIfNeeded(output, prettyPrint);
 			output.append(padLeft(Integer.toString(floor.getWindDirection().intValue()), 3, "0")); // wind direction
+			prettyPrintIfNeeded(output, prettyPrint);
 			output.append(padLeft(Integer.toString(floor.getWindSpeed().intValue()), 3, "0")); // wind speed
-			output.append(" ");
+			output.append(prettyPrint ? "  " : " ");
 			output.append(padLeft(Integer.toString(floor.getTemperature().intValue()), 4, "0"));
+			prettyPrintIfNeeded(output, prettyPrint);
 			output.append(padLeft(Integer.toString(floor.getAirPressure().intValue()), 4, "0"));
-			
-			output.append("\n"); // next row
+
+			// last floor must not have a new line
+			if ((input.getFloorsCount()-1) != floor.getFloor()) {
+				output.append(newLineSeq); // next row
+			}
 		}
 		
 		try {
