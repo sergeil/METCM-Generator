@@ -56,6 +56,22 @@ public class GeneratorInputSpecification {
 			if (location.length() != 6) {
 				errors.add("Location must always contain 6 digits");
 			}
+			
+			if (Double.parseDouble(location) < 0) {
+				errors.add("Location coodrinates cannot be negative");
+			}
+		}
+		
+		if (!emptyFields.contains("windSpeed")) {
+			if (Double.parseDouble(values.get("windSpeed").value) < 0) {
+				errors.add("Wind speed cannot be negative");
+			}
+		}
+		
+		if (!emptyFields.contains("windDirection")) {
+			if (Double.parseDouble(values.get("windDirection").value) < 0) {
+				errors.add("Wind direction cannot be negative");
+			}
 		}
 		
 		return errors;
