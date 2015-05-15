@@ -64,7 +64,7 @@ public class ReportExporter {
 		
 		output.append(" ");
 		
-		output.append("010");
+		output.append(padLeft(Integer.toString(input.getAltitude().intValue()), 3, "0"));
 		output.append(Integer.toString(input.getAirPressure().intValue()).substring(1));
 		
 		output.append(newLineSeq);

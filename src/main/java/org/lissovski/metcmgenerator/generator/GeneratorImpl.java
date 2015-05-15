@@ -21,7 +21,7 @@ public class GeneratorImpl implements ReportGenerator {
 	}
 	
 	private Integer convertFloorToMeters(Integer floor) {
-		return floor * 300; // TODO
+		return floor * 330;
 	}
 	
 	private Double calculateTemperature(Double groundTemp, Integer altitudeInMeters) {
@@ -44,7 +44,7 @@ public class GeneratorImpl implements ReportGenerator {
 			Floor previousFloor = floors.get(i-1);
 			
 			Integer floor = i;
-			Double windDirection = new Double(randInt(0, 360));
+			Double windDirection = new Double(randInt(0, 640));
 			Double windSpeed = previousFloor.getWindSpeed() + randInt(0, 10);
 			Double temperatureInKelvins = convertTemperatureToKelvins(calculateTemperature(input.getTemperature(), altitude));
 			Double airPressure = calculateAirPressure(input.getAirPressure(), altitude);

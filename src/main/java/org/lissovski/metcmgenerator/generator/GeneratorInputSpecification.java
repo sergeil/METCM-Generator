@@ -32,6 +32,7 @@ public class GeneratorInputSpecification {
 		values.put("windDirection", new Field("Wind direction", input.getWindDirection()));
 		values.put("airPressure", new Field("Air pressure", input.getAirPressure()));
 		values.put("floorsCount", new Field("Floors count", input.getFloorsCount()));
+		values.put("altitude", new Field("Altitude", input.getAltitude()));
 		
 		for (Map.Entry<String, Field> entry : values.entrySet()) {
 		    if (entry.getValue().value.replaceAll(" ", "").equals("")) {

@@ -12,12 +12,13 @@ public class GeneratorInput {
 	private Double windDirection;
 	private Double temperature;
 	private Double airPressure;
+	private Double altitude;
 	private Date dateTime;
 	private Integer floorsCount;
 
 	public GeneratorInput(Integer octant, Integer location, Double windSpeed,
-			Double windDirection, Double temperature, Double airPressure, Date dateTime,
-			Integer floorsCount) {
+			Double windDirection, Double temperature, Double airPressure, Double altitude, 
+			Date dateTime, Integer floorsCount) {
 		
 		this.octant = octant;
 		this.location = location;
@@ -25,6 +26,7 @@ public class GeneratorInput {
 		this.windDirection = windDirection;
 		this.temperature = temperature;
 		this.airPressure = airPressure;
+		this.altitude = altitude;
 		this.dateTime = dateTime;
 		this.floorsCount = floorsCount;
 	}
@@ -53,6 +55,10 @@ public class GeneratorInput {
 		return airPressure;
 	}
 
+	public Double getAltitude() {
+		return altitude;
+	}
+
 	public Date getDateTime() {
 		return dateTime;
 	}
@@ -60,14 +66,15 @@ public class GeneratorInput {
 	public Integer getFloorsCount() {
 		return floorsCount;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "GeneratorInput [octant=" + octant + ", location=" + location
 				+ ", windSpeed=" + windSpeed + ", windDirection="
 				+ windDirection + ", temperature=" + temperature
-				+ ", airPressure=" + airPressure + ", dateTime=" + dateTime
-				+ ", floorsCount=" + floorsCount + "]";
+				+ ", airPressure=" + airPressure + ", altitude=" + altitude
+				+ ", dateTime=" + dateTime + ", floorsCount=" + floorsCount
+				+ "]";
 	}
 
 	// private:
@@ -97,6 +104,10 @@ public class GeneratorInput {
 
 	public void setAirPressure(Double airPressure) {
 		this.airPressure = airPressure;
+	}
+
+	public void setAltitude(Double altitude) {
+		this.altitude = altitude;
 	}
 
 	public void setDateTime(Date dateTime) {

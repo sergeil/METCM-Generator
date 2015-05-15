@@ -49,6 +49,7 @@ public class RootShell extends Shell {
 	private Text windDirectionText;
 	private Text temperatureText;
 	private Text airPressureText;
+	private Text altitudeText;
 	private Table reportTable;
 	private DateTime dateInput;
 	private DateTime timeInput;
@@ -137,6 +138,13 @@ public class RootShell extends Shell {
     	airPressureText.setText(settings.getAirPressure());
         adjustWidth(airPressureText);
         
+        Label altitudeLabel = new Label(groundValuesGroup, SWT.NULL);
+        altitudeLabel.setText("Altitude (m):");
+        
+        altitudeText = new Text(groundValuesGroup, inputMask);
+        altitudeText.setText(settings.getAltitude());
+        adjustWidth(altitudeText);
+        
         GridData resetGroundValuesButtonLayoutData = new GridData();
         resetGroundValuesButtonLayoutData.horizontalAlignment = SWT.CENTER;
         Button resetGroundValuesButton = new Button(groundValuesGroup, SWT.NULL);
@@ -190,7 +198,7 @@ public class RootShell extends Shell {
         reportTable = new Table(reportsGroup, SWT.BORDER | SWT.V_SCROLL);
         reportTable.setHeaderVisible(true);
         RowData reportTableLayoutData = new RowData();
-        reportTableLayoutData.height = 355;
+        reportTableLayoutData.height = 405;
         reportTable.setLayoutData(reportTableLayoutData);
         
         String [] columns = {
@@ -233,6 +241,7 @@ public class RootShell extends Shell {
 					windDirectionText.getText(),
 					temperatureText.getText(),
 					airPressureText.getText(), 
+					altitudeText.getText(),
 					year.getTime(), 
 					time.getTime(), 
 					floorsCountText.getText()

@@ -70,6 +70,7 @@ public class ExportDialog extends Dialog {
 		
 		Button prettyPrintButton = new Button(shell, SWT.CHECK);
 		prettyPrintButton.setText("Use pretty print");
+		prettyPrintButton.setSelection(settings.isPrettyPrint());
 		
 		// FIXME position buttons in a center of the buttonsContainer
 		GridData buttonsGroupLayoutData = new GridData(GridData.FILL_HORIZONTAL | GridData.GRAB_HORIZONTAL);

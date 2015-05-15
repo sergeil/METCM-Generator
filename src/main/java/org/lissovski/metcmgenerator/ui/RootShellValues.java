@@ -15,13 +15,14 @@ public class RootShellValues {
 	private String windDirection = "";
 	private String temperature = "";
 	private String airPressure = "";
+	private String altitude = "";
 	private Date date = new Date();
 	private Date time = new Date();
 	private String floorsCount = "31";
 	
 	public RootShellValues(String octant, String location, String windSpeed,
-			String windDirection, String temperature, String airPressure, Date date, 
-			Date time, String floorsCount) {
+			String windDirection, String temperature, String airPressure, String altitude, 
+			Date date, Date time, String floorsCount) {
 		
 		this.octant = octant;
 		this.location = location;
@@ -29,6 +30,7 @@ public class RootShellValues {
 		this.windDirection = windDirection;
 		this.temperature = temperature;
 		this.airPressure = airPressure;
+		this.altitude = altitude;
 		this.date = date;
 		this.time = time;
 		this.floorsCount = floorsCount;
@@ -47,6 +49,7 @@ public class RootShellValues {
 			Double.parseDouble(windDirection), 
 			Double.parseDouble(temperature),
 			Double.parseDouble(airPressure),
+			Double.parseDouble(altitude),
 			dt.getTime(),
 			Integer.parseInt(floorsCount)
 		);
@@ -74,6 +77,10 @@ public class RootShellValues {
 
 	public String getAirPressure() {
 		return airPressure;
+	}
+	
+	public String getAltitude() {
+		return altitude;
 	}
 
 	public Date getDate() {
@@ -115,6 +122,10 @@ public class RootShellValues {
 
 	public void setAirPressure(String airPressure) {
 		this.airPressure = airPressure;
+	}
+
+	public void setAltitude(String altitude) {
+		this.altitude = altitude;
 	}
 
 	public void setDate(Date date) {
