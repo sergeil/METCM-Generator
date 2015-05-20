@@ -89,7 +89,7 @@ public class FrontController {
 						
 						SaveReportShellValues values = event.getSaveReportShellValues();
 						
-						exporter.export(lastOutput, values.getDirectoryPath(), values.isPrettyPrint());
+						exporter.export(lastOutput, values.getDirectoryPath(), values.isPrettyPrint(), values.getFilenamePattern());
 						
 						dialog.close();
 					}

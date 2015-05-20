@@ -53,6 +53,20 @@ public class ExportDialog extends Dialog {
 		Button chooseDirButton = new Button(shell, SWT.NULL);
 		chooseDirButton.setText("...");
 		
+		Label filenamePatternLabel = new Label(shell, SWT.NULL);
+		filenamePatternLabel.setText("Filename pattern:");
+		
+		Text filenamePatternText = new Text(shell, SWT.BORDER);
+		GridData filenamePatternLayoutData = new GridData();
+		filenamePatternLayoutData.widthHint = 250;
+		filenamePatternLayoutData.horizontalSpan = 2;
+		filenamePatternText.setLayoutData(filenamePatternLayoutData);
+		if (settings.getFilenamePattern() != null) {
+			filenamePatternText.setText(settings.getFilenamePattern());
+		} else {
+			filenamePatternText.setText("weather-$date.txt");			
+		}
+		
 		chooseDirButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
 				DirectoryDialog dlg = new DirectoryDialog(shell);
@@ -95,8 +109,12 @@ public class ExportDialog extends Dialog {
 		saveButton.setText("Save");
 		saveButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event arg0) {
-				if (!outputDirText.getText().equals("")) {
-					SaveReportShellValues values = new SaveReportShellValues(outputDirText.getText(), prettyPrintButton.getSelection());
+				if (!outputDirText.getText().equals("") && !filenamePatternText.getText().equals("")) {
+					SaveReportShellValues values = new SaveReportShellValues(
+						outputDirText.getText(), 
+						prettyPrintButton.getSelection(),
+						filenamePatternText.getText()
+					);
 					
 					SaveReportEvent event = new SaveReportEvent(this, values);
 					

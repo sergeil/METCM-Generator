@@ -88,8 +88,6 @@ public class RootShell extends Shell {
         octantLabel.setText("Octant:");
         
         octantText = new Text(groundValuesGroup, inputMask);
-//        octantText.setMessage("Octant");
-//        octantText.setToolTipText("Octant");
     	octantText.setText(settings.getOctant());
         adjustWidth(octantText);
         
@@ -97,8 +95,6 @@ public class RootShell extends Shell {
         locationLabel.setText("Location:");
         
         locationText = new Text(groundValuesGroup, inputMask);
-//        locationText.setMessage("Location");
-//        locationText.setToolTipText("Location");
     	locationText.setText(settings.getLocation());
         adjustWidth(locationText);
         
@@ -106,8 +102,6 @@ public class RootShell extends Shell {
         windSpeedLabel.setText("Wind speed (kn):");
         
         windSpeedText = new Text(groundValuesGroup, inputMask);
-//        windSpeedText.setMessage("Wind speed (kn)");
-//        windSpeedText.setToolTipText("Wind speed (kn)");
     	windSpeedText.setText(settings.getWindSpeed());
         adjustWidth(windSpeedText);
         
@@ -115,8 +109,6 @@ public class RootShell extends Shell {
         windDirectionLabel.setText("Wind direction:");
         
         windDirectionText = new Text(groundValuesGroup, inputMask);
-//        windDirectionText.setMessage("Wind direction");
-//        windDirectionText.setToolTipText("Wind direction");
     	windDirectionText.setText(settings.getWindDirection());
         adjustWidth(windDirectionText);
         
@@ -124,8 +116,6 @@ public class RootShell extends Shell {
         temperatureLabel.setText("Temperature (C):");
         
         temperatureText = new Text(groundValuesGroup, inputMask);
-//        temperatureText.setMessage("Temperature");
-//        temperatureText.setToolTipText("Temperature");
         temperatureText.setText(settings.getTemperature());
         adjustWidth(temperatureText);
         
@@ -133,8 +123,6 @@ public class RootShell extends Shell {
         airPressureLabel.setText("Air pressure:");
         
         airPressureText = new Text(groundValuesGroup, inputMask);
-//        airPressureText.setMessage("Air pressure");
-//        airPressureText.setToolTipText("Air pressure");
     	airPressureText.setText(settings.getAirPressure());
         adjustWidth(airPressureText);
         
@@ -159,6 +147,7 @@ public class RootShell extends Shell {
 				windDirectionText.setText("");
 				temperatureText.setText("");
 				airPressureText.setText("");
+				altitudeText.setText("");
 			}
 		});
 	}

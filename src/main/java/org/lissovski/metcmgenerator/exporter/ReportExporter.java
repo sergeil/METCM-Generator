@@ -32,19 +32,13 @@ public class ReportExporter {
 		}
 	}
 	
-	protected String createFilename() {
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyy-HHmm");
-		
-		return "ilmateade-" + dateFormatter.format(new Date()) + ".txt";
-	}
-	
 	protected void prettyPrintIfNeeded(StringBuilder output, boolean prettyPrint) {
 		if (prettyPrint) {
 			output.append(" ");
 		}
 	}
  	
-	public void export(GeneratorOutput generatorOutput, String path, boolean prettyPrint) {
+	public void export(GeneratorOutput generatorOutput, String path, boolean prettyPrint, String filenamePattern) {
 		GeneratorInput input = generatorOutput.getInput();
 		
 		Calendar c = Calendar.getInstance();
@@ -87,7 +81,9 @@ public class ReportExporter {
 		}
 		
 		try {
-			path += "/" + createFilename();
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("ddMMyy-HHmm");
+			
+			path += "/" + filenamePattern.replace("$date", dateFormatter.format(new Date()));
 			
 			writeToFile(path, output.toString());
 			
