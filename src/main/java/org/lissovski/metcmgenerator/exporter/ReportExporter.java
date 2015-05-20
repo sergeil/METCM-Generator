@@ -10,17 +10,18 @@ import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Logger;
 
 import org.lissovski.metcmgenerator.generator.Floor;
 import org.lissovski.metcmgenerator.generator.GeneratorInput;
 import org.lissovski.metcmgenerator.generator.GeneratorOutput;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
  */
 public class ReportExporter {
-    private final static Logger logger = Logger.getLogger(ReportExporter.class.getName());
+    private final Logger logger = LoggerFactory.getLogger(ReportExporter.class);
     
     public String padLeft(String input, Integer num, String with) {
         return String.format("%"+num+"s", input).replace(" ", with);
@@ -89,7 +90,7 @@ public class ReportExporter {
             
             logger.info("A weather report has been successfully saved to " + path);
         } catch (Exception e) {
-            logger.severe("Unable to save a report to a file '" + path + "', error: " + e.getMessage());
+            logger.error("Unable to save a report to a file '" + path + "', error: " + e.getMessage());
         }
     }
 }

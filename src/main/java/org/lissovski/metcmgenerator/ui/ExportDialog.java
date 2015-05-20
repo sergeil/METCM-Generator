@@ -35,7 +35,7 @@ public class ExportDialog extends Dialog {
     public ExportDialog(Shell parent, SaveReportShellValues settings) {
         super(parent);
 
-        shell = new Shell(parent);
+        shell = new Shell(parent, SWT.APPLICATION_MODAL);
         shell.setLayout(new GridLayout(3, false));
         shell.setText("Choose a directory where to save a report ...");
         
@@ -57,6 +57,7 @@ public class ExportDialog extends Dialog {
         filenamePatternLabel.setText("Filename pattern:");
         
         Text filenamePatternText = new Text(shell, SWT.BORDER);
+        filenamePatternText.setMessage("$date is replaced by current's date and time");
         GridData filenamePatternLayoutData = new GridData();
         filenamePatternLayoutData.widthHint = 250;
         filenamePatternLayoutData.horizontalSpan = 2;
