@@ -11,25 +11,25 @@ import org.lissovski.metcmgenerator.ui.RootShellValues;
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
  */
 public class ExportReportEvent extends EventObject {
-	private static final long serialVersionUID = 7888191502333315597L;
-	
-	private RootShellValues rootShellValues;
-	private List<Floor> reportRows = new Vector<Floor>();
-	
-	public ExportReportEvent(Object source,
-			RootShellValues rootShellValues,
-			List<Floor> reportRows) {
-		super(source);
-		
-		this.rootShellValues = rootShellValues;
-		this.reportRows = reportRows;
-	}
+    private static final long serialVersionUID = 7888191502333315597L;
+    
+    private RootShellValues rootShellValues;
+    private List<Floor> reportRows = new Vector<Floor>();
+    
+    public ExportReportEvent(Object source,
+            RootShellValues rootShellValues,
+            List<Floor> reportRows) {
+        super(source);
+        
+        this.rootShellValues = rootShellValues;
+        this.reportRows = reportRows;
+    }
 
-	public RootShellValues getGeneratorConfigurationData() {
-		return rootShellValues;
-	}
+    public RootShellValues getGeneratorConfigurationData() {
+        return rootShellValues;
+    }
 
-	public List<Floor> getReportRows() {
-		return reportRows;
-	}
+    public List<Floor> getReportRows() {
+        return reportRows;
+    }
 }

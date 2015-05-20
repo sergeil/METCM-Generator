@@ -27,8 +27,7 @@ import org.lissovski.metcmgenerator.ui.events.SaveReportListener;
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
  */
 public class FrontController {
-	
-	public static void main(String[] args) {
+    public static void main(String[] args) {
         ReportGenerator generator = new GeneratorImpl();
         ReportExporter exporter = new ReportExporter();
         SettingsManager settingsManager = new SettingsManager();
@@ -41,81 +40,81 @@ public class FrontController {
         List<GeneratorOutput> generatorOutputs = new Vector<GeneratorOutput>();
         
         rootShell.addGenerateReportListener(new GenerateReportListener() {
-			@Override
-			public void generateReport(GenerateReportEvent event) {
-				List<String> validationErrors = GeneratorInputSpecification.validate(
-					event.getRootShellValues()
-				);
-				
-				if (validationErrors.size() == 0) {
-					// updating settings
-					appSettings.setRootShellSettings(event.getRootShellValues());
-					appSettings.save();
-					
-					// making it possible to do an export
-					rootShell.setExportEnabled(true);	
-					
-					// triggering report generation
-					GeneratorOutput output = generator.generate(event.getRootShellValues().createGeneratorInput());
-					rootShell.reloadReportRows(output.getFloors());
-					
-					generatorOutputs.add(output);
-				} else {
-					// showing validation errors:
-					StringBuffer errorMessage = new StringBuffer();
-					errorMessage.append("Some errors were found: \n");
-					
-					for (String error : validationErrors) {
-						errorMessage.append(" * " + error + "\n");
-					}
-					
-					MessageBox errorDialog = new MessageBox(rootShell, SWT.ICON_ERROR);
-					errorDialog.setText("Unable to proceed");
-					errorDialog.setMessage(errorMessage.toString());
-					errorDialog.open();
-				}
-			}
-		});
+            @Override
+            public void generateReport(GenerateReportEvent event) {
+                List<String> validationErrors = GeneratorInputSpecification.validate(
+                    event.getRootShellValues()
+                );
+                
+                if (validationErrors.size() == 0) {
+                    // updating settings
+                    appSettings.setRootShellSettings(event.getRootShellValues());
+                    appSettings.save();
+                    
+                    // making it possible to do an export
+                    rootShell.setExportEnabled(true);    
+                    
+                    // triggering report generation
+                    GeneratorOutput output = generator.generate(event.getRootShellValues().createGeneratorInput());
+                    rootShell.reloadReportRows(output.getFloors());
+                    
+                    generatorOutputs.add(output);
+                } else {
+                    // showing validation errors:
+                    StringBuffer errorMessage = new StringBuffer();
+                    errorMessage.append("Some errors were found: \n");
+                    
+                    for (String error : validationErrors) {
+                        errorMessage.append(" * " + error + "\n");
+                    }
+                    
+                    MessageBox errorDialog = new MessageBox(rootShell, SWT.ICON_ERROR);
+                    errorDialog.setText("Unable to proceed");
+                    errorDialog.setMessage(errorMessage.toString());
+                    errorDialog.open();
+                }
+            }
+        });
         
         rootShell.addExportReportListener(new ExportReportListener() {
-			public void exportReport(ExportReportEvent event) {
-				ExportDialog dialog = new ExportDialog(rootShell, appSettings.getSaveReportShellSettings());
-				
-				// physical export
-				dialog.addSaveReportListener(new SaveReportListener() {
-					@Override
-					public void saveReport(SaveReportEvent event) {
-						GeneratorOutput lastOutput = generatorOutputs.get(generatorOutputs.size()-1);
-						
-						SaveReportShellValues values = event.getSaveReportShellValues();
-						
-						exporter.export(lastOutput, values.getDirectoryPath(), values.isPrettyPrint(), values.getFilenamePattern());
-						
-						dialog.close();
-					}
-				});
-				
-				// updating settings
-				dialog.addSaveReportListener(new SaveReportListener() {
-					@Override
-					public void saveReport(SaveReportEvent event) {
-						appSettings.setSaveReportShellSettings(event.getSaveReportShellValues());
-						appSettings.save();
-					}
-				});
-				
-				dialog.open();
-			}
-		});
+            public void exportReport(ExportReportEvent event) {
+                ExportDialog dialog = new ExportDialog(rootShell, appSettings.getSaveReportShellSettings());
+                
+                // physical export
+                dialog.addSaveReportListener(new SaveReportListener() {
+                    @Override
+                    public void saveReport(SaveReportEvent event) {
+                        GeneratorOutput lastOutput = generatorOutputs.get(generatorOutputs.size()-1);
+                        
+                        SaveReportShellValues values = event.getSaveReportShellValues();
+                        
+                        exporter.export(lastOutput, values.getDirectoryPath(), values.isPrettyPrint(), values.getFilenamePattern());
+                        
+                        dialog.close();
+                    }
+                });
+                
+                // updating settings
+                dialog.addSaveReportListener(new SaveReportListener() {
+                    @Override
+                    public void saveReport(SaveReportEvent event) {
+                        appSettings.setSaveReportShellSettings(event.getSaveReportShellValues());
+                        appSettings.save();
+                    }
+                });
+                
+                dialog.open();
+            }
+        });
         
         rootShell.pack();
         rootShell.open();
         
         while (!rootShell.isDisposed()) {
             if (!display.readAndDispatch()) {
-            	display.sleep();
+                display.sleep();
             }
         }
         display.dispose();
-	}
+    }
 }
