@@ -35,7 +35,7 @@ public class ExportDialog extends Dialog {
     public ExportDialog(Shell parent, SaveReportShellValues settings) {
         super(parent);
 
-        shell = new Shell(parent, SWT.APPLICATION_MODAL);
+        shell = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
         shell.setLayout(new GridLayout(3, false));
         shell.setText("Choose a directory where to save a report ...");
         
