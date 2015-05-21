@@ -36,5 +36,5 @@ java -XstartOnFirstThread -jar org.lissovski.metcmgenerator-1.0.0-jar-with-depen
 
 ## Licensing
 
-This bundle is under the MIT license. See the complete license in the bundle: 
+This application is under the MIT license. See the complete license in the bundle: 
 meta/LICENSE

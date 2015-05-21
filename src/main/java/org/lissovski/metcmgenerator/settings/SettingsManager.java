@@ -3,13 +3,18 @@ package org.lissovski.metcmgenerator.settings;
 import java.io.File;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.lissovski.metcmgenerator.exporter.ReportExporter;
 import org.lissovski.metcmgenerator.ui.RootShellValues;
 import org.lissovski.metcmgenerator.ui.SaveReportShellValues;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
  */
 public class SettingsManager {
+    private final Logger logger = LoggerFactory.getLogger(SettingsManager.class);
+    
     private ObjectMapper mapper = new ObjectMapper();
     
     private File getSettingsFile() {
@@ -31,8 +36,7 @@ public class SettingsManager {
         try {
             mapper.writeValue(getSettingsFile(), settings);
         } catch (Exception e) {
-            // TODO
-            e.printStackTrace();
+            logger.error("Unable to save application settings, error: " + e.getMessage());
         }
     }
     
@@ -42,8 +46,7 @@ public class SettingsManager {
         try {
             result = mapper.readValue(getSettingsFile(), ApplicationSettings.class);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            logger.error("Unable to load application's settings, error: " + e.getMessage());
         }
         
         result.init(this);
